@@ -10,11 +10,14 @@
 
 using namespace std;
 
-void create_empty_file(string file_name);
-void add_header_to_file(string a_header, string file_name);
+// Funções que só podem ser usadas pelo programa
+void _create_empty_csv(string file_name);
+void _add_header_to_file(string a_header, string file_name);
+int _find_row(string word, string file_name);
+
+// Funções que podem ser usadas pelo programador
 void show_file(string file_name);
-int find_row(string word, string file_name);
-void read_a_line_of_the_file(string name, string file_name);
+string read_a_line_of_the_file(string name, string file_name);
 void criar_estoque(string nome_do_arquivo);
 
 //TODO
@@ -35,14 +38,15 @@ int main() {
      * mostrar só uma linha.
      */
 
-    cout << "Ola mundo" << endl;
 
     return 0;
 }
 
 
-void create_empty_file(string file_name) {
+// Funções que só o programa usa.
+void _create_empty_csv(string file_name) {
     /**
+     * O argumento recebe uma string que é o nome do arquivo que deve ser criado
      * O nome do arquivo deve ser passado sem .csv
      *
      * primeiro verifica se já existe um arquivo com o mesmo nome. Se existir retorna um erro.
@@ -60,8 +64,9 @@ void create_empty_file(string file_name) {
 }
 
 
-void add_header_to_file(string const a_header, string file_name) {
+void _add_header_to_file(string a_header, string file_name) {
     /**
+     *
      * Os itens do header devem ser separados por virgula, e no final deve ter um \n.
      * O nome do arquivo deve ser passado sem .csv.
      *
@@ -83,26 +88,11 @@ void add_header_to_file(string const a_header, string file_name) {
 }
 
 
-void show_file(string file_name) {
-    string line;
-    int count = 0;
-
-    file_name.append(".csv");
-
-    fstream file(file_name);
-
-    while (!file.eof()) {
-        getline(file, line);
-        cout << count << " | " << line << endl;
-        count++;
-    }
-}
-
-
-int find_row(string const word, string file_name){
+int _find_row(string word, string file_name){
     /**
-     * recebe uma palavra e um arquivo.
-     * retorna a linha em que aquela palavra aparece pela primeira vez.
+     * o primeiro parametro, word, é a palavra-chave que deve ser pesquisada no arquivo.
+     * o segundo parametro, file_name, é o nome do arquivo em que a palavra-chave (word) deve ser pesquisada.
+     *
      *
      * .find() retornar a posição do primeiro caracter. Caso não encontre ele retorna
      * string::npos.
@@ -128,11 +118,44 @@ int find_row(string const word, string file_name){
 }
 
 
-void read_a_line_of_the_file(string const name, string file_name) {
+// Funções em que o programador pode usar.
+void show_file(string file_name) {
+    /**
+     * O unico argumento recebe uma variável do tipo string que é o nome do arquivo a ser aberto.
+     * Exibi todas as linhas do arquivo passado.
+     */
+    string line;
+    int count = 0;
+
+    file_name.append(".csv");
+
+    fstream file(file_name);
+
+    while (!file.eof()) {
+        getline(file, line);
+        cout << count << " | " << line << endl;
+        count++;
+    }
+}
+
+
+string read_a_line_of_the_file(string const name, string file_name) {
+    /**
+     * o primeiro argumento recebe uma variavel do tipo string e que é a palavra-chave única
+     * do item a ser pesquisado.
+     *
+     * O segundo argumento recebe uma variável do tipo string que é o nome do arquivo a ser pesquisado.
+     *
+     * retorna 0 se a palavra-chave não for encontrada, e
+     * retorna a linha se a palavra-cave for encontrada.
+     */
     int count = 0, row;
     string line;
 
-    row = find_row(name, file_name);
+    row = _find_row(name, file_name);
+    if (row == 0) {
+        return "0";
+    }
 
     file_name.append(".csv");
 
@@ -142,7 +165,7 @@ void read_a_line_of_the_file(string const name, string file_name) {
     while (!file.eof()) {
         getline(file, line);
         if (count == row) {
-            cout << line << endl;
+            return line;
         }
         count++;
     }
@@ -151,15 +174,21 @@ void read_a_line_of_the_file(string const name, string file_name) {
 
 
 void criar_estoque(const string nome_do_arquivo) {
+    /**
+     * O primeiro argumento é o nome do arquivo do estoque a ser criado.
+     *
+     * Dependente das funções _create_empty_csv e _add_header_to_file.
+     */
     string arquivo = nome_do_arquivo;
+    arquivo.append(".scv");
+
     string a_header = "codigo, nome, quantidade, tecnologia, descrição, tempo entre aplicacoes\n";
-    arquivo.append("scv");
 
 
     fstream file(arquivo);
     if (file.fail()) {
-        create_empty_file(nome_do_arquivo);
-        add_header_to_file(a_header, nome_do_arquivo);
+        _create_empty_csv(nome_do_arquivo);
+        _add_header_to_file(a_header, nome_do_arquivo);
     }
     file.close();
 }
