@@ -35,6 +35,8 @@ int main() {
      * mostrar só uma linha.
      */
 
+    cout << "Ola mundo" << endl;
+
     return 0;
 }
 
