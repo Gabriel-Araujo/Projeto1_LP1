@@ -103,7 +103,7 @@ int _find_row(string word, string file_name){
     while (!file.eof()) {
         getline(file, line);
         result = line.find(word);
-        if (!result) {
+        if (result != -1) {
             return count;
         }
         count++;
