@@ -1,1 +1,2 @@
-# Projeto1_LP1
+# Projeto 1 LP1
+## Primeiro projeto da cadeira de Linguagem de programação
