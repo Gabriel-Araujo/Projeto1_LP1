@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-
 #include <string>
 #include <stdlib.h>
 
@@ -16,9 +15,10 @@ void _add_header_to_file(string a_header, string file_name);
 int _find_row(string word, string file_name);
 
 // Funções que podem ser usadas pelo programador
+void criar_estoque(string nome_do_arquivo);
 void show_file(string file_name);
 string read_a_line_of_the_file(string name, string file_name);
-void criar_estoque(string nome_do_arquivo);
+void adicionar_item_ao_estoque(string const item, string const file_name);
 
 //TODO
 /*
@@ -30,15 +30,9 @@ void criar_estoque(string nome_do_arquivo);
  *
  * system("cls") limpa o terminal.
  */
+
+// codigo, nome, quantidade, tecnologia, descrição, tempo entre aplicacoes
 int main() {
-    /*
-     * voce pode criar um arquivo em branco
-     * adicionar um cabeçalho da sua maneira
-     * mostrar todas linhas e colunas
-     * mostrar só uma linha.
-     */
-
-
     return 0;
 }
 
@@ -173,6 +167,23 @@ string read_a_line_of_the_file(string const name, string file_name) {
 }
 
 
+void adicionar_item_ao_estoque(string item, string const file_name) {
+    /**
+     * primeiro argumento é uma variável do tipo string que recebe uma linha com todas as informações do item.
+     * O segundo argumento é uma variável do tipo string que armazena o nome do arquivo que vai ser salvo a linha.
+     *
+     * A função salva a linha no final do arquivo.
+     */
+    string arquivo = file_name;
+    arquivo.append(".csv");
+
+    ofstream file;
+    file.open(arquivo, ios::app);
+    file << item << '\n';
+    file.close();
+}
+
+
 void criar_estoque(const string nome_do_arquivo) {
     /**
      * O primeiro argumento é o nome do arquivo do estoque a ser criado.
@@ -182,7 +193,7 @@ void criar_estoque(const string nome_do_arquivo) {
     string arquivo = nome_do_arquivo;
     arquivo.append(".scv");
 
-    string a_header = "codigo, nome, quantidade, tecnologia, descrição, tempo entre aplicacoes\n";
+    string a_header = "codigo, nome, quantidade, tecnologia, descricao, tempo entre aplicacoes\n";
 
 
     fstream file(arquivo);
