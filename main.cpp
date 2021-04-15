@@ -22,6 +22,8 @@ string read_a_line_of_the_file(string name, string file_name);                  
 void adicionar_item_ao_estoque(string item, string file_name);                                                          // UPDATE
 void atualizar_item_do_estoque(string atualizacao, string codigo_do_produto, string file_name);                         // UPDATE
 void deletar_item_do_estoque(string codigo_do_produto, string file_name);                                               // DELETE
+
+
 //TODO
 /*
  * Remover linhas existentes
@@ -33,6 +35,7 @@ void deletar_item_do_estoque(string codigo_do_produto, string file_name);       
 
 // codigo, nome, quantidade, tecnologia, descrição, tempo entre aplicacoes
 int main() {
+    deletar_item_do_estoque("0002", "vacina");
     return 0;
 }
 
@@ -240,6 +243,49 @@ void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_
 
             getline(file, line);
             new_file << line << "\n";
+        }
+    }
+
+    file.close();
+    new_file.close();
+
+    remove(arquivo.c_str());
+    rename(novo_arquivo.c_str(), arquivo.c_str());
+}
+
+
+void deletar_item_do_estoque(const string codigo_do_produto, const string file_name) {
+    string arquivo = file_name, novo_arquivo = file_name, line;
+    int linha_do_item = _find_row(codigo_do_produto, file_name), linha_atual = 0;
+
+
+    arquivo.append(".csv");
+    novo_arquivo.append("_new");
+
+    _create_empty_csv(novo_arquivo);
+    novo_arquivo.append(".csv");
+
+    fstream file;
+    ofstream new_file;
+
+    file.open(arquivo);
+    new_file.open(novo_arquivo, ios::trunc);
+
+    if (file.fail() || new_file.fail()) {
+        cout << "DEGUB: Erro ao abrir os arquivo." << endl;
+    }
+    else {
+        while (!file.eof()) {
+            getline(file, line);
+
+            if (linha_atual == linha_do_item) {
+                linha_atual++;
+                continue;
+            }
+            else {
+            new_file << line << '\n';
+            linha_atual++;
+            }
         }
     }
 
