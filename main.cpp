@@ -24,9 +24,7 @@ void atualizar_item_do_estoque(string atualizacao, string codigo_do_produto, str
 
 //TODO
 /*
- * Adicionar novas linhas
  * Remover linhas existentes
- * Atualizar linhas existentes
  *
  * Restruturar a exibição para aparecer melhor.
  *
