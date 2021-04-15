@@ -16,12 +16,12 @@ void _add_header_to_file(string a_header, string file_name);
 int _find_row(string word, string file_name);
 
 // Funções que podem ser usadas pelo programador
-void criar_estoque(string nome_do_arquivo);
-void show_file(string file_name);
-string read_a_line_of_the_file(string name, string file_name);
-void adicionar_item_ao_estoque(string item, string file_name);
-void atualizar_item_do_estoque(string atualizacao, string codigo_do_produto, string file_name);
-
+void criar_estoque(string nome_do_arquivo);                                                                             // CREATE
+void show_file(string file_name);                                                                                       // READ
+string read_a_line_of_the_file(string name, string file_name);                                                          // READ
+void adicionar_item_ao_estoque(string item, string file_name);                                                          // UPDATE
+void atualizar_item_do_estoque(string atualizacao, string codigo_do_produto, string file_name);                         // UPDATE
+void deletar_item_do_estoque(string codigo_do_produto, string file_name);                                               // DELETE
 //TODO
 /*
  * Remover linhas existentes
