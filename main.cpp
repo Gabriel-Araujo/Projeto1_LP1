@@ -35,7 +35,6 @@ void deletar_item_do_estoque(string codigo_do_produto, string file_name);       
 
 // codigo, nome, quantidade, tecnologia, descrição, tempo entre aplicacoes
 int main() {
-    deletar_item_do_estoque("0002", "vacina");
     return 0;
 }
 
@@ -214,10 +213,8 @@ void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_
      * O segundo argumento recebe o codigo do produto que vai ser usado para encontrar a linha a ser atualizada.
      * O terceiro argumento recebe o nome do arquivo em que a atualização será feita.
      */
-    int linha_do_item = _find_row(codigo_do_produto, file_name);
-    string arquivo = file_name;
-    string novo_arquivo = file_name;
-    string line;
+    int linha_do_item = _find_row(codigo_do_produto, file_name), linha_atual = 0;
+    string arquivo = file_name, novo_arquivo = file_name, line;
 
     arquivo.append(".csv");
     novo_arquivo.append("_new");
@@ -225,24 +222,31 @@ void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_
     _create_empty_csv(novo_arquivo);
     novo_arquivo.append(".csv");
 
-    fstream file, new_file;
+    fstream file;
+    ofstream new_file;
 
     file.open(arquivo);
-    new_file.open(novo_arquivo);
+    new_file.open(novo_arquivo, ios::trunc);
 
 
     if (file.fail() || new_file.fail()) {
         cout << "DEBUG: não foi possível abrir o arquivo." << endl;
     }
     else {
-        for (int linha = 0; linha <= linha_do_item; ++linha) {
-            if (linha == linha_do_item) {
-                new_file << atualizacao;
-                continue;
-            }
-
+        while (!file.eof()) {
             getline(file, line);
-            new_file << line << "\n";
+            string::size_type the_size = line.size();
+
+            if (the_size == 0) continue;
+
+            if (linha_atual == linha_do_item) {
+                linha_atual++;
+                new_file << atualizacao << '\n';
+            }
+            else {
+                new_file << line << '\n';
+                linha_atual++;
+            }
         }
     }
 
