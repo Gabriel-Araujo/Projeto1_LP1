@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 
 
 #define DATABASE_VACINA "database_vacina"
@@ -19,6 +20,7 @@ void criar_estoque(string nome_do_arquivo);
 void show_file(string file_name);
 string read_a_line_of_the_file(string name, string file_name);
 void adicionar_item_ao_estoque(string const item, string const file_name);
+void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_produto, const string file_name);
 
 //TODO
 /*
@@ -202,4 +204,50 @@ void criar_estoque(const string nome_do_arquivo) {
         _add_header_to_file(a_header, nome_do_arquivo);
     }
     file.close();
+}
+
+
+void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_produto, const string file_name) {
+    /**
+     * O primeiro argumento recebe uma string que vai ser colocada no lugar da string na linha.
+     * O segundo argumento recebe o codigo do produto que vai ser usado para encontrar a linha a ser atualizada.
+     * O terceiro argumento recebe o nome do arquivo em que a atualização será feita.
+     */
+    int linha_do_item = _find_row(codigo_do_produto, file_name);
+    string arquivo = file_name;
+    string novo_arquivo = file_name;
+    string line;
+
+    arquivo.append(".csv");
+    novo_arquivo.append("_new");
+
+    _create_empty_csv(novo_arquivo);
+    novo_arquivo.append(".csv");
+    fstream file, new_file;
+
+    file.open(arquivo);
+    new_file.open(novo_arquivo);
+
+
+    if (file.fail() || new_file.fail()) {
+        cout << "DEBUG: não foi possível abrir o arquivo." << endl;
+    }
+    else {
+        for (int linha = 0; linha <= linha_do_item; ++linha) {
+            if (linha == linha_do_item) {
+                new_file << atualizacao;
+                continue;
+            }
+
+            getline(file, line);
+            new_file << line << "\n";
+        }
+    }
+    file.close();
+    new_file.close();
+
+
+    remove(arquivo.c_str());
+    rename(novo_arquivo.c_str(), arquivo.c_str());
+
 }
