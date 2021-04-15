@@ -19,8 +19,8 @@ int _find_row(string word, string file_name);
 void criar_estoque(string nome_do_arquivo);
 void show_file(string file_name);
 string read_a_line_of_the_file(string name, string file_name);
-void adicionar_item_ao_estoque(string const item, string const file_name);
-void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_produto, const string file_name);
+void adicionar_item_ao_estoque(string item, string file_name);
+void atualizar_item_do_estoque(string atualizacao, string codigo_do_produto, string file_name);
 
 //TODO
 /*
@@ -135,7 +135,7 @@ void show_file(string file_name) {
 }
 
 
-string read_a_line_of_the_file(string const name, string file_name) {
+string read_a_line_of_the_file(const string name, string file_name) {
     /**
      * o primeiro argumento recebe uma variavel do tipo string e que é a palavra-chave única
      * do item a ser pesquisado.
@@ -169,7 +169,7 @@ string read_a_line_of_the_file(string const name, string file_name) {
 }
 
 
-void adicionar_item_ao_estoque(string item, string const file_name) {
+void adicionar_item_ao_estoque(string item, const string file_name) {
     /**
      * primeiro argumento é uma variável do tipo string que recebe uma linha com todas as informações do item.
      * O segundo argumento é uma variável do tipo string que armazena o nome do arquivo que vai ser salvo a linha.
@@ -223,6 +223,7 @@ void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_
 
     _create_empty_csv(novo_arquivo);
     novo_arquivo.append(".csv");
+
     fstream file, new_file;
 
     file.open(arquivo);
@@ -243,11 +244,10 @@ void atualizar_item_do_estoque(const string atualizacao, const string codigo_do_
             new_file << line << "\n";
         }
     }
+
     file.close();
     new_file.close();
 
-
     remove(arquivo.c_str());
     rename(novo_arquivo.c_str(), arquivo.c_str());
-
 }
