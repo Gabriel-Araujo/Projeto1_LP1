@@ -3,6 +3,7 @@
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
+#include <filesystem>
 
 
 #define DATABASE_VACINA "database_vacina"
@@ -14,9 +15,11 @@ using namespace std;
 void _create_empty_csv(string file_name);
 void _add_header_to_file(string a_header, string file_name);
 int _find_row(string word, string file_name);
+void _criar_diretorios();
+void _criar_estoque(string nome_do_arquivo);                                                                             // CREATE
 
 // Funções que podem ser usadas pelo programador
-void criar_estoque(string nome_do_arquivo);                                                                             // CREATE
+void criar_estoques();
 void show_file(string file_name);                                                                                       // READ
 string read_a_line_of_the_file(string name, string file_name);                                                          // READ
 void adicionar_item_ao_estoque(string item, string file_name);                                                          // UPDATE
@@ -186,7 +189,7 @@ void adicionar_item_ao_estoque(string item, const string file_name) {
 }
 
 
-void criar_estoque(const string nome_do_arquivo) {
+void _criar_estoque(string nome_do_arquivo) {
     /**
      * O primeiro argumento é o nome do arquivo do estoque a ser criado.
      *
@@ -298,4 +301,101 @@ void deletar_item_do_estoque(const string codigo_do_produto, const string file_n
 
     remove(arquivo.c_str());
     rename(novo_arquivo.c_str(), arquivo.c_str());
+}
+
+
+void _criar_diretorios() {
+    bool diretorio_existe = filesystem::exists("databases");
+
+    if (!diretorio_existe) {
+        filesystem::create_directories("database");
+    }
+}
+
+
+void criar_estoques() {
+    _criar_estoque(".\\database\\vacina_federal");
+    _criar_estoque(".\\database\\EPI_federal");
+    _criar_estoque(".\\database\\medicamento_federal");
+    _criar_estoque(".\\database\\vacina_AC");
+    _criar_estoque(".\\database\\EPI_AC");
+    _criar_estoque(".\\database\\medicamento_AC");
+    _criar_estoque(".\\database\\vacina_AL");
+    _criar_estoque(".\\database\\EPI_AL");
+    _criar_estoque(".\\database\\medicamento_AL");
+    _criar_estoque(".\\database\\vacina_AP");
+    _criar_estoque(".\\database\\EPI_AP");
+    _criar_estoque(".\\database\\medicamento_AP");
+    _criar_estoque(".\\database\\vacina_AM");
+    _criar_estoque(".\\database\\EPI_AM");
+    _criar_estoque(".\\database\\medicamento_AM");
+    _criar_estoque(".\\database\\vacina_BA");
+    _criar_estoque(".\\database\\EPI_BA");
+    _criar_estoque(".\\database\\medicamento_BA");
+    _criar_estoque(".\\database\\vacina_CE");
+    _criar_estoque(".\\database\\EPI_CE");
+    _criar_estoque(".\\database\\medicamento_CE");
+    _criar_estoque(".\\database\\vacina_ES");
+    _criar_estoque(".\\database\\EPI_ES");
+    _criar_estoque(".\\database\\medicamento_ES");
+    _criar_estoque(".\\database\\vacina_GO");
+    _criar_estoque(".\\database\\EPI_GO");
+    _criar_estoque(".\\database\\medicamento_GO");
+    _criar_estoque(".\\database\\vacina_MA");
+    _criar_estoque(".\\database\\EPI_MA");
+    _criar_estoque(".\\database\\medicamento_MA");
+    _criar_estoque(".\\database\\vacina_MT");
+    _criar_estoque(".\\database\\EPI_MT");
+    _criar_estoque(".\\database\\medicamento_MT");
+    _criar_estoque(".\\database\\vacina_MS");
+    _criar_estoque(".\\database\\EPI_MS");
+    _criar_estoque(".\\database\\medicamento_MS");
+    _criar_estoque(".\\database\\vacina_MG");
+    _criar_estoque(".\\database\\EPI_MG");
+    _criar_estoque(".\\database\\medicamento_MG");
+    _criar_estoque(".\\database\\vacina_PA");
+    _criar_estoque(".\\database\\EPI_PA");
+    _criar_estoque(".\\database\\medicamento_PA");
+    _criar_estoque(".\\database\\vacina_PB");
+    _criar_estoque(".\\database\\EPI_PB");
+    _criar_estoque(".\\database\\medicamento_PB");
+    _criar_estoque(".\\database\\vacina_PR");
+    _criar_estoque(".\\database\\EPI_PR");
+    _criar_estoque(".\\database\\medicamento_PR");
+    _criar_estoque(".\\database\\vacina_PE");
+    _criar_estoque(".\\database\\EPI_PE");
+    _criar_estoque(".\\database\\medicamento_PE");
+    _criar_estoque(".\\database\\vacina_PI");
+    _criar_estoque(".\\database\\EPI_PI");
+    _criar_estoque(".\\database\\medicamento_PI");
+    _criar_estoque(".\\database\\vacina_RJ");
+    _criar_estoque(".\\database\\EPI_RJ");
+    _criar_estoque(".\\database\\medicamento_RJ");
+    _criar_estoque(".\\database\\vacina_RN");
+    _criar_estoque(".\\database\\EPI_RN");
+    _criar_estoque(".\\database\\medicamento_RN");
+    _criar_estoque(".\\database\\vacina_RS");
+    _criar_estoque(".\\database\\EPI_RS");
+    _criar_estoque(".\\database\\medicamento_RS");
+    _criar_estoque(".\\database\\vacina_RO");
+    _criar_estoque(".\\database\\EPI_RO");
+    _criar_estoque(".\\database\\medicamento_RO");
+    _criar_estoque(".\\database\\vacina_RR");
+    _criar_estoque(".\\database\\EPI_RR");
+    _criar_estoque(".\\database\\medicamento_RR");
+    _criar_estoque(".\\database\\vacina_SC");
+    _criar_estoque(".\\database\\EPI_SC");
+    _criar_estoque(".\\database\\medicamento_SC");
+    _criar_estoque(".\\database\\vacina_SP");
+    _criar_estoque(".\\database\\EPI_SP");
+    _criar_estoque(".\\database\\medicamento_SP");
+    _criar_estoque(".\\database\\vacina_SE");
+    _criar_estoque(".\\database\\EPI_SE");
+    _criar_estoque(".\\database\\medicamento_SE");
+    _criar_estoque(".\\database\\vacina_TO");
+    _criar_estoque(".\\database\\EPI_TO");
+    _criar_estoque(".\\database\\medicamento_TO");
+    _criar_estoque(".\\database\\vacina_DF");
+    _criar_estoque(".\\database\\EPI_DF");
+    _criar_estoque(".\\database\\medicamento_DF");
 }
